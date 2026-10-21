@@ -7,9 +7,14 @@
 	"author": "Mercury Workshop",
 	"license": "AGPL-3.0-only",
 	"packageManager": "pnpm@10.12.1",
+	"engines": {
+		"node": "24.x"
+	},
 	"scripts": {
 		"dev": "node --no-warnings=ExperimentalWarning devserver.ts",
 		"dev:debug": "DEBUG=1 node --no-warnings=ExperimentalWarning devserver.ts",
+		"heroku-postbuild": "bash deploy/build.sh",
+		"start": "node deploy/server.js",
 		"test:package": "ava tests/ci/packageValidation.js",
 		"preinstall": "npx only-allow pnpm"
 	},
@@ -26,7 +31,6 @@
 		"@rsdoctor/rspack-plugin": "^1.4.0",
 		"ts-checker-rspack-plugin": "^1.1.6",
 		"tsc-alias": "^1.8.16",
-		"@mercuryworkshop/wisp-js": "catalog:",
 		"chafa-wasm": "^0.3.1",
 		"chalk": "^5.6.2",
 		"eslint": "^10.2.0",
@@ -35,6 +39,7 @@
 		"glob": "^13.0.6"
 	},
 	"dependencies": {
+		"@mercuryworkshop/wisp-js": "catalog:",
 		"prettier": "^3.6.2"
 	}
 }
