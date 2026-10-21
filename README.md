@@ -56,3 +56,27 @@ pnpm dev
 ```
 
 The demo page for scramjet should now be running at <http://localhost:4141> and should rebuild upon a file being changed (excluding the rewriter).
+
+## Deploying
+
+### Koyeb (Buildpack)
+
+Scramjet can be deployed to [Koyeb](https://www.koyeb.com) (or any other host using Heroku-compatible buildpacks) straight from this repository:
+
+1. Create a new **Web Service** from your fork of this repository.
+2. Select **Buildpack** as the builder. Leave the build and run commands empty; the `heroku-postbuild` script and `Procfile` are picked up automatically.
+3. Expose port `8000` over HTTP on the path `/`. Koyeb passes the port to the server through the `PORT` environment variable.
+4. Deploy.
+
+The build installs the Rust toolchain, `wasm-bindgen`, `wasm-opt` and `wasm-snip` (see [`deploy/build.sh`](deploy/build.sh)), builds the rewriter, Scramjet and the demo, then serves everything with [`deploy/server.js`](deploy/server.js). The demo and its Wisp server share a single port, with Wisp available at `/wisp/`, so no extra configuration is needed.
+
+Optional environment variables:
+
+| Variable                  | Description                                                                                                                                                             |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VITE_WISP_URL`           | Build-time default Wisp server for the demo. Defaults to `/wisp/` on the same origin.                                                                                   |
+| `RELEASE`                 | Set to `0` to build the rewriter in development mode. Builds are faster because the `wasm-opt` pass is skipped, but the rewriter is larger and includes debug features. |
+| `WISP_ALLOW_PRIVATE_IPS`  | Set to `1` to let the Wisp server connect to private IP ranges.                                                                                                         |
+| `WISP_ALLOW_LOOPBACK_IPS` | Set to `1` to let the Wisp server connect to loopback addresses.                                                                                                        |
+
+To try the production build locally, run `bash deploy/build.sh` followed by `pnpm start`.
