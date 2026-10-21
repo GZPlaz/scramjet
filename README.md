@@ -61,7 +61,9 @@ The demo page for scramjet should now be running at <http://localhost:4141> and 
 
 ### Koyeb (Buildpack)
 
-Scramjet can be deployed to [Koyeb](https://www.koyeb.com) (or any other host using Heroku-compatible buildpacks) straight from this repository:
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&builder=buildpack&repository=github.com/GZPlaz/scramjet&branch=main&name=scramjet&ports=8000;http;/)
+
+Scramjet can be deployed to [Koyeb](https://www.koyeb.com) (or any other host using Heroku-compatible buildpacks) straight from this repository, either with the button above or manually:
 
 1. Create a new **Web Service** from your fork of this repository.
 2. Select **Buildpack** as the builder. Leave the build and run commands empty; the `heroku-postbuild` script and `Procfile` are picked up automatically.
